@@ -216,7 +216,7 @@ class IPC(DerivedLogValue):
     """
     def __init__(self, attr, default=None):
         DerivedLogValue.__init__(self, attr)
-        self.default = None
+        self.default = default
 
     def __call__(self, x):
         try:
@@ -237,12 +237,12 @@ class CPI(DerivedLogValue):
 
     def __init__(self, m5name, default=None):
         DerivedLogValue.__init__(self, m5name)
-        self.default = None
+        self.default = default
 
     def __call__(self, x):
         try:
-            return x.get_float("%s.numCycles" % self.m5name) / \
-                x.get_float("%s.committedInsts" % self.m5name)
+            return x.get_float("%s.numCycles" % self.attr) / \
+                x.get_float("%s.committedInsts" % self.attr)
         except ZeroDivisionError:
             return self.default
 
