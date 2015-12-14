@@ -395,6 +395,18 @@ class SlidingWindowBase(Function):
     def __str__(self):
         return "%s(%s, length=%i)" % (self.name, self.params[0], self.length)
 
+class Delta(SlidingWindowBase):
+    """Calculate the a sliding window sum.
+
+    Arguments:
+      param  -- Parameter to evaluate.
+    """
+    def __init__(self, param):
+        SlidingWindowBase.__init__(self, param, 2)
+
+    def _eval_window(self, window):
+        return window[0] - window[1] if len(window) == 2 else window[0]
+
 class SlidingSum(SlidingWindowBase):
     """Calculate the a sliding window sum.
 
